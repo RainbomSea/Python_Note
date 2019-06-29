@@ -60,6 +60,7 @@ class Vector:
         return Vector(self.x * scalar, self.y * scalar)
 ```
 
+### 字符串的表现形式
 
 
 
