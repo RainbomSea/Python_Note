@@ -5,6 +5,7 @@
 ## 基础篇
 
 * [01.Python数据模型](ji-chu-pian/01pythonshu-ju-mo-xing.md)
+* [02.序列构成的数组](ji-chu-pian/02xu-lie.md)
 
 ## 进阶篇
 
