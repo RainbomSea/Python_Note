@@ -93,3 +93,84 @@ Type "help", "copyright", "credits" or "license" for more information.
  
 列表推导可以帮助我们把一个序列或是其他可迭代类型中的元素过滤或 是加工，然后再新建一个列表。**Python** 内置的 `filter` 和 `map` 函数组合起来也能达到这一效果，但是可读性上打了不小的折扣。 
 
+### 生成器表达式
+
+生成器表达式背后遵守了迭代器协议，可以逐个地产出元素，而不是先建立一个完整的列表，然后再把这个列表传递到某个构造函数里
+
+生成器表达式的语法跟列表推导差不多，只不过把方括号换成圆括号而 已。 
+
+用生成器表达式初始化元组和数组:
+
+```py
+>>> symbols = '$¢£¥€¤' 
+>>> tuple(ord(symbol) for symbol in symbols) ➊ 
+(36, 162, 163, 165, 8364, 164) 
+>>> import array 
+>>> array.array('I', (ord(symbol) for symbol in symbols)) ➋
+array('I', [36, 162, 163, 165, 8364, 164]) 
+```
+
+➊ 如果生成器表达式是一个函数调用过程中的唯一参数，那么不需要额外再用括号把它围起来。
+➋ `array` 的构造方法需要两个参数，因此括号是必需的。array 构造方法的第一个参数指定了数组中数字的存储方式。 
+
+使用生成器表达式计算笛卡儿积:
+
+```py
+>>> colors = ['black', 'white'] 
+>>> sizes = ['S', 'M', 'L'] 
+>>> for tshirt in ('%s %s' % (c, s) for c in colors for s in sizes): ➊
+...     print(tshirt) 
+... 
+black S 
+black M 
+black L
+white S 
+white M 
+white L
+```
+
+➊ 生成器表达式逐个产出元素，从来不会一次性产出一个含有 6 个 T 恤样式的列表。 
+
+## 元组不仅仅是不可变的列表
+
+除了用作不可变的列表，它还可以用于没有字段名的记录。
+
+### 元组和记录
+
+元组其实是对数据的记录：元组中的每个元素都存放了记录中一个字段的数据，外加这个字段的位置。正是这个位置信息给数据赋予了意义。
+
+把元组用作记录:
+
+```py
+>>> lax_coordinates = (33.9425, -118.408056)  ➊ 
+>>> city, year, pop, chg, area = ('Tokyo', 2003, 32450, 0.66, 8014)  ➋ 
+>>> traveler_ids = [('USA', '31195855'), ('BRA', 'CE342567'),  ➌ 
+...     ('ESP', 'XDA205856')] 
+>>> for passport in sorted(traveler_ids):  ➍ 
+...     print('%s/%s' % passport) ➎ 
+... 
+BRA/CE342567 
+ESP/XDA205856 
+USA/31195855 
+>>> for country, _ in traveler_ids:  ➏ 
+...     print(country) 
+... 
+USA 
+BRA 
+ESP
+```
+
+❶ 洛杉矶国际机场的经纬度。 
+❷ 东京市的一些信息：市名、年份、人口（单位：百万）、人口变化 （单位：百分比）和面积（单位：平方千米）。 
+❸ 一个元组列表，元组的形式为 (`country_code`, `passport_number`)。 
+❹ 在迭代的过程中，`passport` 变量被绑定到每个元组上。 
+❺ `%` 格式运算符能被匹配到对应的元组元素上。 
+❻ `for` 循环可以分别提取元组里的元素，也叫作拆包（`unpacking`）。因为元组中第二个元素对我们没有什么用，所以它赋值给“`_`”占位符
+
+### 元组拆包
+
+
+
+
+
+
