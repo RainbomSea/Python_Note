@@ -266,7 +266,7 @@ for name, cc, pop, (latitude, longitude) in metro_areas:  # ➋
 
 ❶ 每个元组内有 4 个元素，其中最后一个元素是一对坐标。   
 ❷ 我们把输入元组的最后一个元素拆包到由变量构成的元组里，这样 就获取了坐标。   
-❸ if longitude &lt;= 0: 这个条件判断把输出限制在西半球的城市。
+❸ `if longitude <= 0`: 这个条件判断把输出限制在西半球的城市。
 
 输出:
 
@@ -283,7 +283,48 @@ Sao Paul        |  -23.5478 |  -46.6358
 
 ### 具名数组
 
+`collections.namedtuple`是一个工厂函数，它可以用来构建一个带字段名的元组和一个有名字的类——这个带名字的类对调试程序有很大帮助。
 
+> 用`namedtuple`构建的类的实例所消耗的内存跟元组是一样的，因为字段名都被存在对应的类里面。这个实例跟普通的对象实例比起来也要小一些，因为 **Python** 不会用 `__dict__` 来存放这些实例的属性。
 
+定义和使用具名元组:
 
+```py
+>>> from collections import namedtuple 
+>>> City = namedtuple('City', 'name country population coordinates')  ➊ 
+>>> tokyo = City('Tokyo', 'JP', 36.933, (35.689722, 139.691667))  ➋ 
+>>> tokyo 
+City(name='Tokyo', country='JP', population=36.933, coordinates=(35.689722, 139.691667)) 
+>>> tokyo.population  ➌ 
+36.933 
+>>> tokyo.coordinates (35.689722, 139.691667) 
+>>> tokyo[1] 
+'JP' 
+```
 
+❶ 创建一个具名元组需要两个参数，一个是类名，另一个是类的各个字段的名字。后者可以是由数个字符串组成的可迭代对象，或者是由空 格分隔开的字段名组成的字符串。 
+❷ 存放在对应字段里的数据要以一串参数的形式传入到构造函数中 （注意，元组的构造函数却只接受单一的可迭代对象）。
+❸ 你可以通过字段名或者位置来获取一个字段的信息。 
+
+除了从普通元组那里继承来的属性之外，具名元组还有一些自己专有的属性：`_fields`类属性、类方法`_make(iterable)`和实例方法 `_asdict()`。 
+
+```py
+>>> City._fields  ➊ 
+('name', 'country', 'population', 'coordinates') 
+>>> LatLong = namedtuple('LatLong', 'lat long') 
+>>> delhi_data = ('Delhi NCR', 'IN', 21.935, LatLong(28.613889, 77.208889)) 
+>>> delhi = City._make(delhi_data)  ➋ 
+>>> delhi._asdict()  ➌ 
+OrderedDict([('name', 'Delhi NCR'), ('country', 'IN'), ('population',
+21.935), ('coordinates', LatLong(lat=28.613889, long=77.208889))]) 
+>>> for key, value in delhi._asdict().items():
+        print(key + ':', value) 
+name: Delhi NCR 
+country: IN 
+population: 21.935 
+coordinates: LatLong(lat=28.613889, long=77.208889) 
+```
+
+❶ `_fields`属性是一个包含这个类所有字段名称的元组。 
+❷ 用`_make()`通过接受一个可迭代对象来生成这个类的一个实例，它的作用跟`City(*delhi_data)`是一样的。 
+❸ `_asdict()` 把具名元组以`collections.OrderedDict`的形式返回，我们可以利用它来把元组里的信息友好地呈现出来。 
