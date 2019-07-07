@@ -328,3 +328,65 @@ coordinates: LatLong(lat=28.613889, long=77.208889)
 ❶ `_fields`属性是一个包含这个类所有字段名称的元组。 
 ❷ 用`_make()`通过接受一个可迭代对象来生成这个类的一个实例，它的作用跟`City(*delhi_data)`是一样的。 
 ❸ `_asdict()` 把具名元组以`collections.OrderedDict`的形式返回，我们可以利用它来把元组里的信息友好地呈现出来。 
+
+## 切片
+
+### 为什么切片和区间会忽略最后一个元素
+
+* 当只有最后一个位置信息时，我们也可以快速看出切片和区间里有几个元素：`range(3)` 和 `my_list[:3]` 都返回 `3` 个元素。 
+
+* 当起止位置信息都可见时，我们可以快速计算出切片和区间的长度，用后一个数减去第一个下标`（stop - start）`即可。 
+
+* 这样做也让我们可以利用任意一个下标来把序列分割成不重叠的两部分，只要写成 `my_list[:x]` 和 `my_list[x:]` 就可以了，如下所示。
+
+  ```py
+  >>> l = [10, 20, 30, 40, 50, 60] 
+  >>> l[:2] # 在下标2的地方分割 
+  [10, 20] 
+  >>> l[2:] 
+  [30, 40, 50, 60] 
+  >>> l[:3] # 在下标3的地方分割 
+  [10, 20, 30]
+  >>> l[3:] 
+  [40, 50, 60] 
+  ```
+
+### 对对象进行切片 
+
+一个众所周知的秘密是，我们还可以用 `s[a:b:c]` 的形式对 `s` 在 `a` 和 `b` 之间以 `c` 为间隔取值。`c`的值还可以为负，负值意味着反向取值。
+
+  ```py
+  >>> s = 'bicycle' 
+  >>> s[::3] 
+  'bye' 
+  >>> s[::-1] 
+  'elcycib' 
+  >>> s[::-2] 
+  'eccb' 
+  ```
+  
+`a:b:c` 这种用法只能作为索引或者下标用在 `[]` 中来返回一个切片对象：`slice(a, b, c)`。对 `seq[start:stop:step]` 进行求值的时候，**Python** 会调用 `seq.__getitem__(slice(start, stop, step))`
+
+  ```py
+  >>> invoice = """
+  ... 0.....6................................40........52...55........ 
+  ... 1909  Pimoroni PiBrella                    $17.50    3    $52.50
+  ... 1489  6mm Tactile Switch x20                $4.95    2     $9.90 
+  ... 1510  Panavise Jr. - PV-201                $28.00    1    $28.00 
+  ... 1601  PiTFT Mini Kit 320x240               $34.95    1    $34.95 
+  ... """ 
+  >>> SKU = slice(0, 6) 
+  >>> DESCRIPTION = slice(6, 40) 
+  >>> UNIT_PRICE = slice(40, 52) 
+  >>> QUANTITY = slice(52, 55) 
+  >>> ITEM_TOTAL = slice(55, None) 
+  >>> line_items = invoice.split('\n')[2:] 
+  >>> for item in line_items: 
+  ...     print(item[UNIT_PRICE], item[DESCRIPTION]) 
+  ...
+      $17.50   Pimoroni PiBrella
+      $4.95   6mm Tactile Switch x20
+      $28.00   Panavise Jr. - PV-201
+      $34.95   PiTFT Mini Kit 320x240 
+  ```
+
