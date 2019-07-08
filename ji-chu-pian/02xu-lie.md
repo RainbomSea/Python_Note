@@ -665,3 +665,85 @@ TypeError: 'tuple' object does not support item assignment
 `bisect` 模块包含两个主要函数，`bisect` 和 `insort`，两个函数都利用二分查找算法来在有序序列中查找或插入元素。 
 
 ### 用bisect来搜索
+
+`bisect(haystack, needle)` 在 `haystack`（干草垛）里搜索 `needle`（针）的位置，该位置满足的条件是，把 `needle` 插入这个位置之后，`haystack` 还能保持升序。也就是在说这个函数返回的位置前面的值，都小于或等于 `needle` 的值。其中 `haystack` 必须是一个有序的序列。你可以先用 `bisect(haystack, needle)` 查找位置 `index`，再用 `haystack.insert(index, needle)` 来插入新值。但你也可用 `insort` 来一步到位，并且后者的速度更快一些。
+
+示例利用几个精心挑选的 `needle`，向我们展示了 `bisect` 返回的不同位置值。
+
+在有序序列中用 bisect 查找某个元素的插入位置:
+
+```py
+import bisect 
+import sys 
+HAYSTACK = [1, 4, 5, 6, 8, 12, 15, 20, 21, 23, 23, 26, 29, 30] 
+NEEDLES = [0, 1, 2, 5, 8, 10, 22, 23, 29, 30, 31] 
+ROW_FMT = '{0:2d} @ {1:2d}    {2}{0:<2d}' 
+def demo(bisect_fn):
+    for needle in reversed(NEEDLES):
+        position = bisect_fn(HAYSTACK, needle)  ➊
+        offset = position * '  |'  ➋
+        print(ROW_FMT.format(needle, position, offset))  ➌ 
+        
+if __name__ == '__main__':
+    if sys.argv[-1] == 'left':  ➍
+        bisect_fn = bisect.bisect_left
+    else:
+        bisect_fn = bisect.bisect
+        
+    print('DEMO:', bisect_fn.__name__)  ➎
+    print('haystack ->', ' '.join('%2d' % n for n in HAYSTACK))
+    demo(bisect_fn) 
+```
+
+❶ 用特定的 `bisect` 函数来计算元素应该出现的位置。 
+
+❷ 利用该位置来算出需要几个分隔符号。 
+
+❸ 把元素和其应该出现的位置打印出来。 
+
+❹ 根据命令上最后一个参数来选用 `bisect` 函数。 
+
+❺ 把选定的函数在抬头打印出来。
+
+![ZrWe4P.png](https://s2.ax1x.com/2019/07/08/ZrWe4P.png)
+
+`bisect` 的表现可以从两个方面来调教。 
+
+* 首先可以用它的两个可选参数——`lo` 和 `hi`——来缩小搜寻的范围。`lo` 的默认值是 `0`，`hi` 的默认值是序列的长度，即 `len()` 作用于该序列的返回值
+
+* 其次，`bisect`函数其实是`bisect_right`函数的别名，后者还有个姊妹函数叫 `bisect_left`。它们的区别在于`bisect_left`返回的插入位置是原序列中跟被插入元素相等的元素的位置，也就是新元素会被放置于它相等的元素的前面，而 `bisect_right`返回的则是跟它相等的元素之后的位置。这个细微的差别可能对于整数序列来讲没什么用，但是 对于那些值相等但是形式不同的数据类型来讲，结果就不一样了。比如说虽然 `1 == 1.0` 的返回值是 `True`，`1` 和 `1.0` 其实是两个不同的元素。图显示的是用 `bisect_left` 来运行上述示例的结果。 
+
+  ![ZrfSVs.png](https://s2.ax1x.com/2019/07/08/ZrfSVs.png)
+
+`bisect`可以用来建立一个用数字作为索引的查询表格，比如说把分数和成绩对应起来
+
+```py
+>>> def grade(score, breakpoints=[60, 70, 80, 90], grades='FDCBA'):
+...     i = bisect.bisect(breakpoints, score) 
+...     return grades[i] 
+... 
+>>> [grade(score) for score in [33, 99, 77, 70, 89, 90, 100]] 
+['F', 'A', 'C', 'C', 'B', 'A', 'A'] 
+```
+
+### 用bisect.insort插入新元素 
+
+排序很耗时，因此在得到一个有序序列之后，我们最好能够保持它的有序。`bisect.insort` 就是为了这个而存在的。 
+
+`insort(seq, item)` 把变量 `item` 插入到序列 `seq` 中，并能保持 `seq` 的升序顺序。
+
+```py
+import bisect 
+import random 
+SIZE=7
+random.seed(1729) 
+my_list = [] 
+for i in range(SIZE):
+    new_item = random.randrange(SIZE*2)
+    bisect.insort(my_list, new_item)
+    print('%2d ->' % new_item, my_list) 
+```
+
+![ZrfhWV.png](https://s2.ax1x.com/2019/07/08/ZrfhWV.png)
+
+`insort` 跟 `bisect` 一样，有 `lo` 和 `hi` 两个可选参数用来控制查找的范 围。它也有个变体叫 `insort_left`，这个变体在背后用的是 `bisect_left`。 
