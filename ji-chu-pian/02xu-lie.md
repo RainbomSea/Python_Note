@@ -747,3 +747,5 @@ for i in range(SIZE):
 ![ZrfhWV.png](https://s2.ax1x.com/2019/07/08/ZrfhWV.png)
 
 `insort` 跟 `bisect` 一样，有 `lo` 和 `hi` 两个可选参数用来控制查找的范 围。它也有个变体叫 `insort_left`，这个变体在背后用的是 `bisect_left`。 
+
+## 当列表不是首选时 
