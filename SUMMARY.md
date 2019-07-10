@@ -7,6 +7,7 @@
 * [01.Python数据模型](ji-chu-pian/01pythonshu-ju-mo-xing.md)
 * [02.序列构成的数组](ji-chu-pian/02xu-lie.md)
 * [03.字典和集合](ji-chu-pian/03zi-dian-he-ji-he.md)
+* [04.文本和字节序列](ji-chu-pian/04wen-ben-he-zi-jie-xu-lie.md)
 
 ## 进阶篇
 
