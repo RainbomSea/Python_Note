@@ -8,6 +8,7 @@
 * [02.序列构成的数组](ji-chu-pian/02xu-lie.md)
 * [03.字典和集合](ji-chu-pian/03zi-dian-he-ji-he.md)
 * [04.文本和字节序列](ji-chu-pian/04wen-ben-he-zi-jie-xu-lie.md)
+* [05.一等函数](ji-chu-pian/05yi-deng-han-shu.md)
 
 ## 进阶篇
 
