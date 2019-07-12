@@ -9,6 +9,7 @@
 * [03.字典和集合](ji-chu-pian/03zi-dian-he-ji-he.md)
 * [04.文本和字节序列](ji-chu-pian/04wen-ben-he-zi-jie-xu-lie.md)
 * [05.一等函数](ji-chu-pian/05yi-deng-han-shu.md)
+* [06.使用一等函数实现设计模式](ji-chu-pian/06shi-yong-yi-deng-han-shu-shi-xian-she-ji-mo-shi.md)
 
 ## 进阶篇
 
