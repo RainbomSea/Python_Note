@@ -840,5 +840,3 @@ running register(active=False)->decorate(<function f2 at 0x10073c268>)
 ❹ 这次调用从 `registry` 中删除 `f2`。 
 
 ❺ 确认 `registry` 中只有 `f3`。 
-
-

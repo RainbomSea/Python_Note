@@ -11,6 +11,7 @@
 * [05.一等函数](ji-chu-pian/05yi-deng-han-shu.md)
 * [06.使用一等函数实现设计模式](ji-chu-pian/06shi-yong-yi-deng-han-shu-shi-xian-she-ji-mo-shi.md)
 * [07.函数装饰器和闭包](ji-chu-pian/07han-shu-zhuang-shi-qi-he-bi-bao.md)
+* 08. 对象引用、可变性和垃圾回收 
 
 ## 进阶篇
 
