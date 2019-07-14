@@ -12,6 +12,7 @@
 * [06.使用一等函数实现设计模式](ji-chu-pian/06shi-yong-yi-deng-han-shu-shi-xian-she-ji-mo-shi.md)
 * [07.函数装饰器和闭包](ji-chu-pian/07han-shu-zhuang-shi-qi-he-bi-bao.md)
 * [08.对象引用、可变性和垃圾回收 ](ji-chu-pian/08dui-xiang-yin-yong-3001-ke-bian-xing-he-la-ji-hui-shou.md)
+* [09.符合Python风格的对象](ji-chu-pian/09fu-he-python-de-dui-xiang.md)
 
 ## 进阶篇
 
