@@ -15,6 +15,7 @@
 * [09.符合Python风格的对象](ji-chu-pian/09fu-he-python-de-dui-xiang.md)
 * [10.序列的修改、散列和切 片](ji-chu-pian/10xu-lie-de-xiu-gai-3001-san-lie-he-qie-pian.md)
 * [11.接口：从协议到抽象基类](ji-chu-pian/11jie-kou-ff1a-cong-xie-yi-dao-chou-xiang-ji-lei.md)
+* [12.继承的优缺点](ji-chu-pian/12ji-cheng-de-you-que-dian.md)
 
 ## 进阶篇
 
