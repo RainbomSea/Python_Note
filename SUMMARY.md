@@ -16,6 +16,8 @@
 * [10.序列的修改、散列和切 片](ji-chu-pian/10xu-lie-de-xiu-gai-3001-san-lie-he-qie-pian.md)
 * [11.接口：从协议到抽象基类](ji-chu-pian/11jie-kou-ff1a-cong-xie-yi-dao-chou-xiang-ji-lei.md)
 * [12.继承的优缺点](ji-chu-pian/12ji-cheng-de-you-que-dian.md)
+* [13.正确重载运算符](ji-chu-pian/13zheng-que-zhong-zai-yun-suan-fu.md)
+* [14.可迭代的对象、迭代器 和生成器 ](ji-chu-pian/14ke-die-dai-de-dui-xiang-3001-die-dai-qi-he-sheng-cheng-qi.md)
 
 ## 进阶篇
 
