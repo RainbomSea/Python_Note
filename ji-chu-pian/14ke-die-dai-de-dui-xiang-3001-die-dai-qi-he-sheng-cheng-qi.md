@@ -506,82 +506,59 @@ class Sentence:
         return (match.group() for mathch in RE_WORD.finditer(self.text))
 ```
 
-## 何时使用生成器表达式
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## Python 3.3中新出现的句法：yield from 
+
+如果生成器函数需要产出另一个生成器生成的值，传统的解决方法是使 用嵌套的 for 循环。 
+
+例如，下面是我们自己实现的 chain 生成器
+
+```py
+>>> def chain(*iterables):
+...     for it in iterables:
+...         for i in it:
+...             yield i
+...
+>>> s = 'ABC'
+>>> t = tuple(range(3))
+>>> list(chain(s, t))
+['A', 'B', 'C', 0, 1, 2] 
+```
+
+chain 生成器函数把操作依次交给接收到的各个可迭代对象处理。为 此，[PEP 380 — Syntax for Delegating to a Subgenerator](https://www.python.org/dev/peps/pep-0380/)引入了一个新句法，如下述控制台中的代码清单所示：
+
+```py
+>>> def chain(*iterables):
+...     for i in iterables:
+...         yield from i
+...
+>>> list(chain(s, t))
+['A', 'B', 'C', 0, 1, 2] 
+```
+
+可以看出，`yield from i` 完全代替了内层的 `for` 循环。在这个示例中 使用 `yield from` 是对的，而且代码读起来更顺畅，不过感觉更像是语法糖。除了代替循环之外，`yield from` 还会创建通道，把内层生成器直接与外层生成器的客户端联系起来。把生成器当成协程使用时，这个通道特别重要，不仅能为客户端代码生成值，还能使用客户端代码提供的值。
+
+## 深入分析iter函数
+
+如前所述，在 **Python** 中迭代对象 `x` 时会调用 `iter(x)`。
+
+可是，`iter` 函数还有一个鲜为人知的用法：传入两个参数，使用常规的函数或任何可调用的对象创建迭代器。这样使用时，第一个参数必须是可调用的对象，用于不断调用（没有参数），产出各个值；第二个值是哨符，这是个标记值，当可调用的对象返回这个值时，触发迭代器抛 出 `StopIteration` 异常，而不产出哨符。  
+
+下述示例展示如何使用 `iter` 函数掷骰子，直到掷出 `1` 点为止：
+
+```py
+>>> def d6(): 
+...     return randint(1, 6) 
+... 
+>>> d6_iter = iter(d6, 1) 
+>>> d6_iter 
+<callable_iterator object at 0x00000000029BE6A0> 
+>>> for roll in d6_iter: 
+...     print(roll) 
+... 
+4 
+3 
+6 
+3 
+```
+
+注意，这里的 `iter` 函数返回一个 `callable_iterator` 对象。示例中 的 `for` 循环可能运行特别长的时间，不过肯定不会打印 `1`，因为 `1` 是哨 符。与常规的迭代器一样，这个示例中的 `d6_iter` 对象一旦耗尽就没用了。如果想重新开始，必须再次调用 `iter(...)`，重新构建迭代器。 
