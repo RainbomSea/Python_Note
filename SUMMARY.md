@@ -2,7 +2,7 @@
 
 * [introduction](README.md)
 
-## 基础篇
+## 流畅的Python学习篇
 
 * [01.Python数据模型](ji-chu-pian/01pythonshu-ju-mo-xing.md)
 * [02.序列构成的数组](ji-chu-pian/02xu-lie.md)
@@ -19,7 +19,7 @@
 * [13.正确重载运算符](ji-chu-pian/13zheng-que-zhong-zai-yun-suan-fu.md)
 * [14.可迭代的对象、迭代器 和生成器 ](ji-chu-pian/14ke-die-dai-de-dui-xiang-3001-die-dai-qi-he-sheng-cheng-qi.md)
 
-## 进阶篇
+## 笔记记录篇
 
 ## Web框架篇
 

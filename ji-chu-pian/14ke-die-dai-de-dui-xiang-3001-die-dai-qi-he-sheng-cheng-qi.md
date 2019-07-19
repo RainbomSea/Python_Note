@@ -437,6 +437,151 @@ class Sentence:
 
 ## Sentence类第5版：生成器表达式 
 
+生成器表达式可以理解为列表推导的惰性版本：不会迫切地构建列表， 而是返回一个生成器，按需惰性生成元素。也就是说，如果列表推导是 制造列表的工厂，那么生成器表达式就是制造生成器的工厂。
+
+示例 14-8 先在列表推导中使用 `gen_AB` 生成器函数，然后在生成 器表达式中使用 
+
+
+```py
+>>> def gen_AB():  # ➊ 
+...     print('start') 
+...     yield 'A' 
+...     print('continue') 
+...     yield 'B' 
+...     print('end.') 
+... 
+>>> res1 = [x*3 for x in gen_AB()]  # ➋ 
+start 
+continue 
+end. 
+>>> for i in res1:  # ➌ 
+...     print('-->', i) 
+... 
+--> AAA 
+--> BBB 
+>>> res2 = (x*3 for x in gen_AB())  # ➍ 
+>>> res2  # ➎ 
+<generator object <genexpr> at 0x10063c240> 
+>>> for i in res2:  # ➏ 
+...     print('-->', i) 
+... 
+start 
+--> AAA 
+continue 
+--> BBB
+end. 
+```
+
+❶ `gen_AB` 函数与示例 14-6 中的一样。 
+
+❷ 列表推导迫切地迭代 `gen_AB()` 函数生成的生成器对象产出的元 素：`'A'` 和 `'B'`。注意，下面的输出是 `start`、`continue` 和 `end.`。 
+
+❸ 这个 `for` 循环迭代列表推导生成的 `res1` 列表。 
+
+❹ 把生成器表达式返回的值赋值给 `res2`。只需调用 `gen_AB()` 函数， 虽然调用时会返回一个生成器，但是这里并不使用。 
+
+❺ `res2` 是一个生成器对象。 
+
+❻ 只有 `for` 循环迭代 `res2` 时，`gen_AB` 函数的定义体才会真正执 行。`for` 循环每次迭代时会隐式调用 `next(res2)`，前进到 `gen_AB` 函 数中的下一个 `yield` 语句。注意，`gen_AB` 函数的输出与 `for` 循环中 `print` 函数的输出夹杂在一起。  
+
+可以看出，生成器表达式会产出生成器，因此可以使用生成器表达式进 一步减少 Sentence 类的代码，如示例 14-9 所示。
+
+示例 14-9 `sentence_genexp.py`：使用生成器表达式实现 `Sentence` 类 
+
+```py
+import re
+import reprlib
+
+RE_WORD = re.complie('\w+')
+
+class Sentence:
+
+    def __init__(self, text):
+        self.text = text
+        
+    def __repr__(self):
+        return 'Sentence(%s)' % reprlib.repr(slef.text)
+        
+    def __iter__(self):
+        return (match.group() for mathch in RE_WORD.finditer(self.text))
+```
+
+## 何时使用生成器表达式
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
