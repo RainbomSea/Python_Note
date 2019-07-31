@@ -20,6 +20,7 @@
 * [14.可迭代的对象、迭代器 和生成器 ](ji-chu-pian/14ke-die-dai-de-dui-xiang-3001-die-dai-qi-he-sheng-cheng-qi.md)
 * [16.携程](ji-chu-pian/15xie-cheng.md)
 * [17.使用期物处理并发](ji-chu-pian/17shi-yong-qi-wu-chu-li-bing-fa.md)
+* [18.使用 asyncio 包处理并发 ](ji-chu-pian/18shi-yong-asyncio-bao-chu-li-bing-fa.md)
 
 ## 笔记记录篇
 
